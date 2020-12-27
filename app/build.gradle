@@ -48,7 +48,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     //Kotlin
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.4.21"
 
     //Android
     implementation 'androidx.appcompat:appcompat:1.2.0'
@@ -76,5 +76,11 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxjava:2.2.10'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
     implementation("io.reactivex.rxjava2:rxkotlin:2.4.0")
+
+    //room
+    implementation "androidx.room:room-runtime:2.2.6"
+    implementation "androidx.room:room-ktx:2.2.6"
+    implementation "androidx.room:room-testing:2.2.6"
+    kapt "androidx.room:room-compiler:2.2.6"
 
 }
