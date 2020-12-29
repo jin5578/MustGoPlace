@@ -2,15 +2,16 @@ package com.example.mustgoplace.ui.home
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.mustgoplace.model.Event
 import java.text.SimpleDateFormat
 import java.util.*
+import com.example.mustgoplace.util.getMonth
+
 
 class HomeViewModel @ViewModelInject constructor() : ViewModel() {
-
-    private val currentTime = Calendar.getInstance().time
 
     private val _navigateToRecord = MutableLiveData<Event<Unit>>()
     val navigateToRecord: LiveData<Event<Unit>>
@@ -20,13 +21,26 @@ class HomeViewModel @ViewModelInject constructor() : ViewModel() {
     val navigateToSetting: LiveData<Event<Unit>>
         get() = _navigateToSetting
 
-    private val _year = MutableLiveData<String>().apply { value = getYear() }
+    private val currentDate = MediatorLiveData<Date>().apply { value = Calendar.getInstance().time }
+
+    private val _year = MediatorLiveData<String>()
     val year: LiveData<String>
         get() = _year
 
-    private val _month = MutableLiveData<String>().apply { value = getMonth() }
+    private val _month = MediatorLiveData<String>()
     val month: LiveData<String>
         get() = _month
+
+
+    init {
+        _year.addSource(currentDate) {
+            _year.value = it.mapToYear()
+        }
+
+        _month.addSource(currentDate) {
+            _month.value = it.mapToMonth()
+        }
+    }
 
 
     fun clickRecord() {
@@ -37,17 +51,17 @@ class HomeViewModel @ViewModelInject constructor() : ViewModel() {
         _navigateToSetting.value = Event(Unit)
     }
 
-
-    private fun getYear(): String {
+    private fun Date.mapToYear(): String {
         val yearFormat = SimpleDateFormat("yyyy", Locale.KOREA)
 
-        return yearFormat.format(currentTime).toString()
+        return yearFormat.format(this)
     }
 
-    private fun getMonth(): String {
+    private fun Date.mapToMonth(): String {
         val monthFormat = SimpleDateFormat("MM", Locale.KOREA)
+        val month = monthFormat.format(this)
 
-        return monthFormat.format(currentTime)
+        return getMonth(month)
     }
 
 }
