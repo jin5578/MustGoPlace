@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.mustgoplace.databinding.FragmentRecordBinding
+import com.example.mustgoplace.model.EventObserver
 import com.example.mustgoplace.util.onBackPressedPopBackStack
 
 class RecordFragment : Fragment() {
@@ -32,6 +34,14 @@ class RecordFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         onBackPressedPopBackStack()
+
+        viewModel.showAlertDialog.observe(viewLifecycleOwner, EventObserver {
+
+        })
+
+        viewModel.navigateToHome.observe(viewLifecycleOwner, EventObserver {
+            findNavController().popBackStack()
+        })
     }
 
 }
