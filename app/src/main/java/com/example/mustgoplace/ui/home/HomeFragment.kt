@@ -39,6 +39,10 @@ class HomeFragment : Fragment() {
         viewModel.navigateToSetting.observe(viewLifecycleOwner, EventObserver {
             findNavController().navigate(HomeFragmentDirections.actionToSettingFromHome())
         })
+
+        viewModel.navigateToSetting.observe(viewLifecycleOwner, EventObserver {
+            findNavController().navigate(HomeFragmentDirections.actionToSettingFromHome())
+        })
     }
 
 }
