@@ -39,6 +39,10 @@ class RecordFragment : Fragment() {
 
         })
 
+        viewModel.showAlertDialog.observe(viewLifecycleOwner, EventObserver {
+            
+        })
+
         viewModel.navigateToHome.observe(viewLifecycleOwner, EventObserver {
             findNavController().popBackStack()
         })
