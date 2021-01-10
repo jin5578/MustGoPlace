@@ -1,7 +1,9 @@
 package com.example.mustgoplace.util
 
+import android.view.Gravity
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
@@ -58,4 +60,21 @@ fun Fragment.showAlertDialog(content: String) {
     }
 
     alertDialog.show()
+}
+
+fun Fragment.showToastMessage(message: String) {
+    val toastView = layoutInflater.inflate(
+        R.layout.layout_custom_toast,
+        requireActivity().findViewById(R.id.constraintLayout)
+    ).apply {
+        findViewById<TextView>(R.id.textView).text = message
+    }
+
+    with(Toast(requireContext())) {
+        setGravity(Gravity.BOTTOM, 0, 260)
+        duration = Toast.LENGTH_SHORT
+        view = toastView
+
+        show()
+    }
 }

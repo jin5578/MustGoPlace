@@ -13,6 +13,10 @@ import com.example.mustgoplace.util.getMonth
 
 class HomeViewModel @ViewModelInject constructor() : ViewModel() {
 
+    private val _showToast = MutableLiveData<Event<String>>()
+    val showToast: LiveData<Event<String>>
+        get() = _showToast
+
     private val _navigateToRecord = MutableLiveData<Event<Unit>>()
     val navigateToRecord: LiveData<Event<Unit>>
         get() = _navigateToRecord
@@ -20,6 +24,10 @@ class HomeViewModel @ViewModelInject constructor() : ViewModel() {
     private val _navigateToSetting = MutableLiveData<Event<Unit>>()
     val navigateToSetting: LiveData<Event<Unit>>
         get() = _navigateToSetting
+
+    private val _appKillProcess = MutableLiveData<Event<Unit>>()
+    val appkillProcess: LiveData<Event<Unit>>
+        get() = _appKillProcess
 
     private val currentDate = MediatorLiveData<Date>().apply { value = Calendar.getInstance().time }
 
@@ -30,6 +38,8 @@ class HomeViewModel @ViewModelInject constructor() : ViewModel() {
     private val _month = MediatorLiveData<String>()
     val month: LiveData<String>
         get() = _month
+
+    private var pressedTime: Long = 0
 
 
     init {
@@ -50,6 +60,27 @@ class HomeViewModel @ViewModelInject constructor() : ViewModel() {
     fun clickSetting() {
         _navigateToSetting.value = Event(Unit)
     }
+
+    fun backPressed() {
+        when (pressedTime) {
+            0.toLong() -> {
+                _showToast.postValue(Event("한 번 더 누르면 종료됩니다 :)"))
+                pressedTime = System.currentTimeMillis()
+            }
+
+            else -> {
+                val secondsTime = (System.currentTimeMillis() - pressedTime).toInt()
+
+                if (secondsTime > 2000) {
+                    _showToast.postValue(Event("한 번 더 누르면 종료됩니다 :)"))
+                    pressedTime = 0
+                } else {
+                    _appKillProcess.value = Event(Unit)
+                }
+            }
+        }
+    }
+
 
     private fun Date.mapToYear(): String {
         val yearFormat = SimpleDateFormat("yyyy", Locale.KOREA)
