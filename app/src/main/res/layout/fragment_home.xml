@@ -23,8 +23,22 @@
             android:orientation="vertical"
             app:layout_constraintGuide_begin="20dp" />
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_end_20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="20dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_bottom_20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_end="20dp" />
+
         <TextView
-            android:id="@+id/year"
+            android:id="@+id/tv_year"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -39,7 +53,7 @@
             tools:text="2020" />
 
         <TextView
-            android:id="@+id/month"
+            android:id="@+id/tv_month"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -49,49 +63,47 @@
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/year"
+            app:layout_constraintTop_toBottomOf="@id/tv_year"
             tools:text="DECEMBER" />
 
+        <ImageView
+            android:id="@+id/iv_setting"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:onClick="@{() -> viewModel.clickSetting()}"
+            app:layout_constraintBottom_toBottomOf="@id/tv_month"
+            app:layout_constraintStart_toStartOf="@id/guide_start_20"
+            app:layout_constraintTop_toTopOf="@id/tv_year"
+            app:srcCompat="@drawable/ic_settings" />
+
         <View
+            android:id="@+id/vi_contour"
             android:layout_width="@dimen/match_constraint"
             android:layout_height="1dp"
             android:layout_marginTop="20dp"
             android:background="@color/colorGray3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/month" />
+            app:layout_constraintTop_toBottomOf="@id/tv_month" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+            android:id="@+id/rv_record_list"
             android:layout_width="@dimen/match_constraint"
             android:layout_height="@dimen/match_constraint"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            app:layout_constraintBottom_toTopOf="@id/plus"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/month" />
-
-        <ImageView
-            android:id="@+id/plus"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginBottom="20dp"
-            android:onClick="@{() -> viewModel.clickRecord()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/ic_plus" />
+            app:layout_constraintTop_toBottomOf="@id/vi_contour" />
 
-        <ImageView
-            android:id="@+id/setting"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:onClick="@{() -> viewModel.clickSetting()}"
-            app:layout_constraintBottom_toBottomOf="@id/plus"
-            app:layout_constraintStart_toStartOf="@id/guide_start_20"
-            app:layout_constraintTop_toTopOf="@id/plus"
-            app:srcCompat="@drawable/ic_settings" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_plus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> viewModel.clickRecord()}"
+            app:layout_constraintBottom_toBottomOf="@id/guide_bottom_20"
+            app:layout_constraintEnd_toEndOf="@id/guide_end_20"
+            app:rippleColor="@color/colorGray1"
+            app:srcCompat="@drawable/ic_baseline_add_24" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
