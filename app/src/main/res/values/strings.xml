@@ -1,5 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">MustGoPlace</string>
     <string name="app_name_title">Must Go Place</string>
     <string name="setting">설정</string>
+    <string name="alert_dialog_content">작성한 내용이 저장되지 않아요. \n화면을 닫을까요?</string>
 </resources>

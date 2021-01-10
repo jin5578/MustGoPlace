@@ -52,6 +52,15 @@
             app:layout_constraintTop_toBottomOf="@id/year"
             tools:text="DECEMBER" />
 
+        <View
+            android:layout_width="@dimen/match_constraint"
+            android:layout_height="1dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/colorGray3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/month" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="@dimen/match_constraint"

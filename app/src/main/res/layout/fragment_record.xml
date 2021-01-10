@@ -35,10 +35,10 @@
             android:layout_width="50dp"
             android:layout_height="55dp"
             android:onClick="@{() -> viewModel.clickPrevious()}"
-            android:padding="18dp"
+            android:padding="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_cancel" />
+            app:srcCompat="@drawable/ic_baseline_close_24" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -59,27 +59,78 @@
             android:id="@+id/check"
             android:layout_width="50dp"
             android:layout_height="55dp"
-            android:padding="18dp"
+            android:padding="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_check" />
+            app:srcCompat="@drawable/ic_baseline_check_24" />
 
-        <EditText
-            android:id="@+id/content"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="@dimen/match_constraint"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:background="@drawable/background_rectangle_black"
-            android:fontFamily="@font/ssflowerroad_regular"
-            android:lineSpacingExtra="5dp"
-            android:padding="20dp"
-            android:text="@={viewModel.content}"
-            android:textSize="12sp"
-            app:alignText="@{viewModel.textAlign}"
             app:layout_constraintEnd_toEndOf="@id/guide_end_20"
             app:layout_constraintStart_toStartOf="@id/guide_start_20"
-            app:layout_constraintTop_toBottomOf="@id/previous"
-            tools:text="오늘의 맛집 !\n주변의 맛집에 대해 적어보세요.\n아주 신기한 일이 일어납니다." />
+            app:layout_constraintTop_toBottomOf="@id/previous">
+
+            <TextView
+                android:id="@+id/day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/ssflowerroad_regular"
+                android:text="@{viewModel.dayOfMonth}"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="31" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@color/black"
+                app:layout_constraintEnd_toEndOf="@id/day"
+                app:layout_constraintStart_toStartOf="@id/day"
+                app:layout_constraintTop_toBottomOf="@id/day" />
+
+            <TextView
+                android:id="@+id/day_of_week"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/ssflowerroad_regular"
+                android:text="@{viewModel.dayOfWeek}"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@id/day"
+                app:layout_constraintStart_toEndOf="@id/day"
+                tools:text="FRI" />
+
+
+            <EditText
+                android:id="@+id/content"
+                android:layout_width="@dimen/match_constraint"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@null"
+                android:fontFamily="@font/ssflowerroad_regular"
+                android:lineSpacingExtra="5dp"
+                android:padding="20dp"
+                android:text="@={viewModel.content}"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                app:alignText="@{viewModel.textAlign}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/day"
+                tools:text="오늘의 맛집 !\n주변의 맛집에 대해 적어보세요.\n아주 신기한 일이 일어납니다." />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="@dimen/match_constraint"
@@ -114,7 +165,6 @@
                 app:srcCompat="@drawable/ic_baseline_image_search_24" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

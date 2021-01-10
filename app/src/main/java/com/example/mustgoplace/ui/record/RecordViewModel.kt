@@ -9,6 +9,7 @@ import com.example.mustgoplace.model.Event
 import java.text.SimpleDateFormat
 import java.util.*
 import com.example.mustgoplace.util.getMonth
+import timber.log.Timber
 
 
 class RecordViewModel @ViewModelInject constructor() : ViewModel() {
@@ -27,15 +28,20 @@ class RecordViewModel @ViewModelInject constructor() : ViewModel() {
     val monthYear: LiveData<String>
         get() = _monthYear
 
-    private val _textAlign = MutableLiveData<Int>().apply { value = 0 }     // 0: left, 1: center, 2: right
+    private val _dayOfMonth = MediatorLiveData<String>()
+    val dayOfMonth: LiveData<String>
+        get() = _dayOfMonth
+
+    private val _dayOfWeek = MediatorLiveData<String>()
+    val dayOfWeek: LiveData<String>
+        get() = _dayOfWeek
+
+    private val _textAlign =
+        MutableLiveData<Int>().apply { value = 0 }     // 0: left, 1: center, 2: right
     val textAlign: LiveData<Int>
         get() = _textAlign
 
-    val content = MediatorLiveData<String>()
-
-    private val _contentValidation = MediatorLiveData<Boolean>().apply { value = false }
-    val contentValidation: LiveData<Boolean>
-        get() = _contentValidation
+    val content = MutableLiveData<String>()
 
 
     init {
@@ -43,20 +49,18 @@ class RecordViewModel @ViewModelInject constructor() : ViewModel() {
             _monthYear.value = it.mapToMonthYearFormat()
         }
 
-        _contentValidation.addSource(content) {
-            _contentValidation.value = true
+        _dayOfMonth.addSource(currentDate) {
+            _dayOfMonth.value = it.mapToDayOfMonthFormat()
+        }
+
+        _dayOfWeek.addSource(currentDate) {
+            _dayOfWeek.value = it.mapToDayOfWeekFormat()
         }
     }
 
 
     fun clickPrevious() {
-        val bool = _contentValidation.value ?: true
-
-        if (bool) {
-            _showAlertDialog.value = Event(Unit)
-        } else {
-            _navigateToHome.value = Event(Unit)
-        }
+        checkContentIsNull()
     }
 
     fun clickTextAlign() {
@@ -67,8 +71,18 @@ class RecordViewModel @ViewModelInject constructor() : ViewModel() {
 
     }
 
+    fun checkContentIsNull() {
+        val contentIsNull = content.value.isNullOrEmpty()
+
+        if (contentIsNull) {
+            _navigateToHome.value = Event(Unit)
+        } else {
+            _showAlertDialog.value = Event(Unit)
+        }
+    }
+
     private fun changeTextAlign() {
-        when(_textAlign.value) {
+        when (_textAlign.value) {
             0 -> _textAlign.value = 1
             1 -> _textAlign.value = 2
             2 -> _textAlign.value = 0
@@ -80,6 +94,18 @@ class RecordViewModel @ViewModelInject constructor() : ViewModel() {
         val current = dateFormat.format(this)
 
         return getMonth(current.substring(0, 2)) + " " + current.substring(3, 7)
+    }
+
+    private fun Date.mapToDayOfMonthFormat(): String {
+        val dateFormat = SimpleDateFormat("dd", Locale.KOREA)
+
+        return dateFormat.format(this)
+    }
+
+    private fun Date.mapToDayOfWeekFormat(): String {
+        val dateFormat = SimpleDateFormat("E", Locale.ENGLISH)
+
+        return dateFormat.format(this)
     }
 
 }
