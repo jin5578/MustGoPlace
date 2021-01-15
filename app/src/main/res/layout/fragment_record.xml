@@ -31,10 +31,10 @@
             app:layout_constraintGuide_end="20dp" />
 
         <ImageView
-            android:id="@+id/previous"
+            android:id="@+id/iv_previous"
             android:layout_width="50dp"
             android:layout_height="55dp"
-            android:onClick="@{() -> viewModel.clickPrevious()}"
+            android:onClick="@{() -> viewModel.onPreviousClicked()}"
             android:padding="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -49,16 +49,17 @@
             android:text="@{viewModel.monthYear}"
             android:textColor="@color/black"
             android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@id/previous"
+            app:layout_constraintBottom_toBottomOf="@id/iv_previous"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/previous"
+            app:layout_constraintTop_toTopOf="@id/iv_previous"
             tools:text="DECEMBER 2020" />
 
         <ImageView
-            android:id="@+id/check"
+            android:id="@+id/iv_confirm"
             android:layout_width="50dp"
             android:layout_height="55dp"
+            android:onClick="@{() -> viewModel.onConfirmClicked()}"
             android:padding="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -71,50 +72,57 @@
             android:background="@drawable/background_rectangle_black"
             app:layout_constraintEnd_toEndOf="@id/guide_end_20"
             app:layout_constraintStart_toStartOf="@id/guide_start_20"
-            app:layout_constraintTop_toBottomOf="@id/previous">
+            app:layout_constraintTop_toBottomOf="@id/iv_previous">
 
-            <TextView
-                android:id="@+id/day"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_day"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:fontFamily="@font/ssflowerroad_regular"
-                android:text="@{viewModel.dayOfMonth}"
-                android:textColor="@color/black"
-                android:textSize="18sp"
+                android:onClick="@{() -> viewModel.onDayClicked()}"
+                android:padding="20dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="31" />
+                app:layout_constraintTop_toTopOf="parent">
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:background="@color/black"
-                app:layout_constraintEnd_toEndOf="@id/day"
-                app:layout_constraintStart_toStartOf="@id/day"
-                app:layout_constraintTop_toBottomOf="@id/day" />
+                <TextView
+                    android:id="@+id/tv_day"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/ssflowerroad_regular"
+                    android:text="@{viewModel.dayOfMonth}"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="31" />
 
-            <TextView
-                android:id="@+id/day_of_week"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp"
-                android:fontFamily="@font/ssflowerroad_regular"
-                android:text="@{viewModel.dayOfWeek}"
-                android:textColor="@color/black"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="@id/day"
-                app:layout_constraintStart_toEndOf="@id/day"
-                tools:text="FRI" />
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:background="@color/black"
+                    app:layout_constraintEnd_toEndOf="@id/tv_day"
+                    app:layout_constraintStart_toStartOf="@id/tv_day"
+                    app:layout_constraintTop_toBottomOf="@id/tv_day" />
 
+                <TextView
+                    android:id="@+id/day_of_week"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/ssflowerroad_regular"
+                    android:text="@{viewModel.dayOfWeek}"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_day"
+                    app:layout_constraintStart_toEndOf="@id/tv_day"
+                    tools:text="FRI" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <EditText
-                android:id="@+id/content"
+                android:id="@+id/et_content"
                 android:layout_width="@dimen/match_constraint"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:background="@null"
                 android:fontFamily="@font/ssflowerroad_regular"
                 android:lineSpacingExtra="5dp"
@@ -126,11 +134,10 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/day"
+                app:layout_constraintTop_toBottomOf="@id/cl_day"
                 tools:text="오늘의 맛집 !\n주변의 맛집에 대해 적어보세요.\n아주 신기한 일이 일어납니다." />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="@dimen/match_constraint"
@@ -145,24 +152,15 @@
             app:layout_constraintStart_toStartOf="parent">
 
             <ImageView
-                android:id="@+id/align"
+                android:id="@+id/iv_text_align"
                 android:layout_width="50dp"
                 android:layout_height="25dp"
-                android:onClick="@{() -> viewModel.clickTextAlign()}"
+                android:onClick="@{() -> viewModel.onTextAlignClicked()}"
                 app:alignImage="@{viewModel.textAlign}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:src="@drawable/ic_baseline_format_align_left_24" />
-
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="25dp"
-                android:onClick="@{() -> viewModel.clickImage()}"
-                app:layout_constraintBottom_toBottomOf="@id/align"
-                app:layout_constraintStart_toEndOf="@id/align"
-                app:layout_constraintTop_toTopOf="@id/align"
-                app:srcCompat="@drawable/ic_baseline_image_search_24" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,21 +1,19 @@
 package com.example.mustgoplace.ui.record
 
+import android.app.DatePickerDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.mustgoplace.R
 import com.example.mustgoplace.databinding.FragmentRecordBinding
 import com.example.mustgoplace.model.EventObserver
-import com.example.mustgoplace.util.onBackPressedPopBackStack
 import com.example.mustgoplace.util.showAlertDialog
-import timber.log.Timber
+
 
 class RecordFragment : Fragment() {
 
@@ -45,9 +43,25 @@ class RecordFragment : Fragment() {
             showAlertDialog(resources.getString(R.string.alert_dialog_content))
         })
 
+        viewModel.showDatePicker.observe(viewLifecycleOwner, EventObserver {
+            showDatePickerAlert(it)
+        })
+
         viewModel.navigateToHome.observe(viewLifecycleOwner, EventObserver {
             findNavController().popBackStack()
         })
+    }
+
+    private fun showDatePickerAlert(eventDate: Triple<Int, Int, Int>) {
+        DatePickerDialog(
+            requireContext(),
+            { _, year, month, dayOfMonth ->
+                viewModel.setDateValue(year, month, dayOfMonth)
+            },
+            eventDate.first,
+            eventDate.second,
+            eventDate.third
+        ).show()
     }
 
     private fun onBackPressed() {

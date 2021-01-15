@@ -12,17 +12,23 @@ import com.example.mustgoplace.util.getMonth
 import timber.log.Timber
 
 
+private typealias EVENT_DATE_PICKER = Triple<Int, Int, Int>
+
 class RecordViewModel @ViewModelInject constructor() : ViewModel() {
 
     private val _showAlertDialog = MutableLiveData<Event<Unit>>()
     val showAlertDialog: LiveData<Event<Unit>>
         get() = _showAlertDialog
 
+    private val _showDatePicker = MutableLiveData<Event<EVENT_DATE_PICKER>>()
+    val showDatePicker: LiveData<Event<EVENT_DATE_PICKER>>
+        get() = _showDatePicker
+
     private val _navigateToHome = MutableLiveData<Event<Unit>>()
     val navigateToHome: LiveData<Event<Unit>>
         get() = _navigateToHome
 
-    private val currentDate = MediatorLiveData<Date>().apply { value = Calendar.getInstance().time }
+    private val _date = MediatorLiveData<Calendar>().apply { value = Calendar.getInstance() }
 
     private val _monthYear = MediatorLiveData<String>()
     val monthYear: LiveData<String>
@@ -45,30 +51,38 @@ class RecordViewModel @ViewModelInject constructor() : ViewModel() {
 
 
     init {
-        _monthYear.addSource(currentDate) {
+        _monthYear.addSource(_date) {
             _monthYear.value = it.mapToMonthYearFormat()
         }
 
-        _dayOfMonth.addSource(currentDate) {
+        _dayOfMonth.addSource(_date) {
             _dayOfMonth.value = it.mapToDayOfMonthFormat()
         }
 
-        _dayOfWeek.addSource(currentDate) {
+        _dayOfWeek.addSource(_date) {
             _dayOfWeek.value = it.mapToDayOfWeekFormat()
         }
     }
 
 
-    fun clickPrevious() {
+    fun onPreviousClicked() {
         checkContentIsNull()
     }
 
-    fun clickTextAlign() {
+    fun onConfirmClicked() {
+        Timber.e("currentDate : ${_date.value}")
+    }
+
+    fun onDayClicked() {
+        _showDatePicker.value = Event(getDefaultDate())
+    }
+
+    fun onTextAlignClicked() {
         changeTextAlign()
     }
 
-    fun clickImage() {
-
+    fun setDateValue(year: Int, month: Int, dayOfMonth: Int) {
+        _date.value = update(year, month, dayOfMonth)
     }
 
     fun checkContentIsNull() {
@@ -81,6 +95,25 @@ class RecordViewModel @ViewModelInject constructor() : ViewModel() {
         }
     }
 
+    private fun getDefaultDate(): EVENT_DATE_PICKER {
+        val calendar = _date.value ?: Calendar.getInstance()
+
+        return Triple(
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH),
+            calendar.get(Calendar.DAY_OF_MONTH)
+        )
+    }
+
+    private fun update(year: Int, month: Int, dayOfMonth: Int): Calendar {
+        val calendar = Calendar.getInstance()
+        calendar.apply {
+            set(year, month, dayOfMonth)
+        }
+
+        return calendar
+    }
+
     private fun changeTextAlign() {
         when (_textAlign.value) {
             0 -> _textAlign.value = 1
@@ -89,23 +122,24 @@ class RecordViewModel @ViewModelInject constructor() : ViewModel() {
         }
     }
 
-    private fun Date.mapToMonthYearFormat(): String {
+
+    private fun Calendar.mapToMonthYearFormat(): String {
         val dateFormat = SimpleDateFormat("MM.yyyy", Locale.KOREA)
-        val current = dateFormat.format(this)
+        val current = dateFormat.format(this.time)
 
         return getMonth(current.substring(0, 2)) + " " + current.substring(3, 7)
     }
 
-    private fun Date.mapToDayOfMonthFormat(): String {
+    private fun Calendar.mapToDayOfMonthFormat(): String {
         val dateFormat = SimpleDateFormat("dd", Locale.KOREA)
 
-        return dateFormat.format(this)
+        return dateFormat.format(this.time)
     }
 
-    private fun Date.mapToDayOfWeekFormat(): String {
+    private fun Calendar.mapToDayOfWeekFormat(): String {
         val dateFormat = SimpleDateFormat("E", Locale.ENGLISH)
 
-        return dateFormat.format(this)
+        return dateFormat.format(this.time)
     }
 
 }
