@@ -4,7 +4,9 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.example.mustgoplace.data.db.ApplicationDatabase.Companion.VERSION
+import com.example.mustgoplace.data.db.converter.DateConverter
 import com.example.mustgoplace.data.db.dao.PlaceDao
 import com.example.mustgoplace.data.db.dao.SearchDao
 import com.example.mustgoplace.data.db.entity.PlaceEntity
@@ -20,6 +22,7 @@ import com.example.mustgoplace.data.db.entity.SearchEntity
     exportSchema = false
 )
 
+@TypeConverters(DateConverter::class)
 abstract class ApplicationDatabase : RoomDatabase() {
 
     abstract fun placeDao(): PlaceDao
