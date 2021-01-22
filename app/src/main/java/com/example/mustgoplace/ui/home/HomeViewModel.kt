@@ -1,6 +1,5 @@
 package com.example.mustgoplace.ui.home
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,9 +8,10 @@ import com.example.mustgoplace.model.Event
 import java.text.SimpleDateFormat
 import java.util.*
 import com.example.mustgoplace.util.getMonth
+import javax.inject.Inject
 
 
-class HomeViewModel @ViewModelInject constructor() : ViewModel() {
+class HomeViewModel @Inject constructor() : ViewModel() {
 
     private val _showToast = MutableLiveData<Event<String>>()
     val showToast: LiveData<Event<String>>

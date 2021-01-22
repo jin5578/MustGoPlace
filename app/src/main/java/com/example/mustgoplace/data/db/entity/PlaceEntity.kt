@@ -11,8 +11,8 @@ data class PlaceEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     val id: Long,
-    @ColumnInfo(name = "store_name")
-    val storeName: String,
+    @ColumnInfo(name = "content")
+    val content: String,
     @ColumnInfo(name = "visitedAt")
     val visitedAt: Date,
     @ColumnInfo(name = "writtenAt")

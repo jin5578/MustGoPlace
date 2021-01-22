@@ -13,6 +13,7 @@ import com.example.mustgoplace.model.EventObserver
 import com.example.mustgoplace.util.appKillProcess
 import com.example.mustgoplace.util.showToastMessage
 
+
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding

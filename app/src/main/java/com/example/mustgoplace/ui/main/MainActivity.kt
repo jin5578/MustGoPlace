@@ -5,10 +5,8 @@ import androidx.activity.viewModels
 import com.example.mustgoplace.R
 import com.example.mustgoplace.databinding.ActivityMainBinding
 import com.example.mustgoplace.ui.base.BaseActivity
-import dagger.hilt.android.AndroidEntryPoint
 
 
-@AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     override val layoutResourceId: Int = R.layout.activity_main

@@ -1,20 +1,20 @@
 package com.example.mustgoplace.ui.record
 
-import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.example.mustgoplace.model.Event
 import java.text.SimpleDateFormat
 import java.util.*
 import com.example.mustgoplace.util.getMonth
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
+import javax.inject.Inject
 
 
 private typealias EVENT_DATE_PICKER = Triple<Int, Int, Int>
 
-class RecordViewModel @ViewModelInject constructor() : ViewModel() {
+class RecordViewModel @Inject constructor() : ViewModel() {
 
     private val _showAlertDialog = MutableLiveData<Event<Unit>>()
     val showAlertDialog: LiveData<Event<Unit>>
@@ -95,6 +95,14 @@ class RecordViewModel @ViewModelInject constructor() : ViewModel() {
         }
     }
 
+    private fun onPlaceInsert() {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+
+            }
+        }
+    }
+
     private fun getDefaultDate(): EVENT_DATE_PICKER {
         val calendar = _date.value ?: Calendar.getInstance()
 
@@ -121,7 +129,6 @@ class RecordViewModel @ViewModelInject constructor() : ViewModel() {
             2 -> _textAlign.value = 0
         }
     }
-
 
     private fun Calendar.mapToMonthYearFormat(): String {
         val dateFormat = SimpleDateFormat("MM.yyyy", Locale.KOREA)
