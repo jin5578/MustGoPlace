@@ -10,5 +10,5 @@ import dagger.android.ContributesAndroidInjector
 abstract class SettingModule {
     @FragmentScope
     @ContributesAndroidInjector
-    abstract fun contributesSettingFragment(): HomeFragment
+    abstract fun contributesSettingFragment(): SettingFragment
 }

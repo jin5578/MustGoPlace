@@ -9,13 +9,20 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.mustgoplace.databinding.FragmentSettingBinding
 import com.example.mustgoplace.model.EventObserver
+import com.example.mustgoplace.util.assistedFragmentViewModel
 import com.example.mustgoplace.util.onBackPressedPopBackStack
+import dagger.android.support.DaggerFragment
+import javax.inject.Inject
+import javax.inject.Provider
 
-class SettingFragment : Fragment() {
+class SettingFragment : DaggerFragment() {
 
     private lateinit var binding: FragmentSettingBinding
 
-    private val viewModel by viewModels<SettingViewModel>()
+    @Inject
+    lateinit var viewModelProvider: Provider<SettingViewModel>
+    private val viewModel by assistedFragmentViewModel { viewModelProvider.get() }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,

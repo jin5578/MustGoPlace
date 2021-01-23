@@ -12,14 +12,21 @@ import androidx.navigation.fragment.findNavController
 import com.example.mustgoplace.R
 import com.example.mustgoplace.databinding.FragmentRecordBinding
 import com.example.mustgoplace.model.EventObserver
+import com.example.mustgoplace.util.assistedFragmentViewModel
 import com.example.mustgoplace.util.showAlertDialog
+import dagger.android.support.DaggerFragment
+import javax.inject.Inject
+import javax.inject.Provider
 
 
-class RecordFragment : Fragment() {
+class RecordFragment : DaggerFragment() {
 
     private lateinit var binding: FragmentRecordBinding
 
-    private val viewModel by viewModels<RecordViewModel>()
+    @Inject
+    lateinit var viewModelProvider: Provider<RecordViewModel>
+    private val viewModel by assistedFragmentViewModel { viewModelProvider.get() }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,

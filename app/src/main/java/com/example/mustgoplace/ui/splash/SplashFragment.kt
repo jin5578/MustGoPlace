@@ -8,13 +8,20 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.mustgoplace.databinding.FragmentSplashBinding
 import com.example.mustgoplace.model.EventObserver
+import com.example.mustgoplace.util.assistedFragmentViewModel
 import com.example.mustgoplace.util.onBackPressedAppKill
+import dagger.android.support.DaggerFragment
+import javax.inject.Inject
+import javax.inject.Provider
 
-class SplashFragment : Fragment() {
+class SplashFragment : DaggerFragment() {
 
     private lateinit var binding: FragmentSplashBinding
 
-    private val viewModel by viewModels<SplashViewModel>()
+    @Inject
+    lateinit var viewModelProvider: Provider<SplashViewModel>
+    private val viewModel by assistedFragmentViewModel { viewModelProvider.get() }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
