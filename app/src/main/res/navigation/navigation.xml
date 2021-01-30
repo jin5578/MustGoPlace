@@ -51,7 +51,23 @@
         android:id="@+id/recordFragment"
         android:name="com.example.mustgoplace.ui.record.RecordFragment"
         android:label="record"
-        tools:layout="@layout/fragment_record" />
+        tools:layout="@layout/fragment_record">
+
+        <action
+            android:id="@+id/action_to_search_from_record"
+            app:destination="@id/searchFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.mustgoplace.ui.search.SearchFragment"
+        android:label="search"
+        tools:layout="@layout/fragment_search" />
 
     <fragment
         android:id="@+id/settingFragment"

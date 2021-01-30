@@ -66,6 +66,7 @@
             app:srcCompat="@drawable/ic_baseline_check_24" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_content"
             android:layout_width="@dimen/match_constraint"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -137,6 +138,39 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/cl_day"
                 tools:text="오늘의 맛집 !\n주변의 맛집에 대해 적어보세요.\n아주 신기한 일이 일어납니다." />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_location"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:paddingVertical="10dp"
+            android:onClick="@{() -> viewModel.onLocationClicked()}"
+            app:layout_constraintEnd_toEndOf="@id/guide_end_20"
+            app:layout_constraintStart_toStartOf="@id/guide_start_20"
+            app:layout_constraintTop_toBottomOf="@id/cl_content">
+
+            <TextView
+                android:id="@+id/tv_location_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/ssflowerroad_regular"
+                android:text="위치 추가"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_baseline_arrow_forward_ios_24" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -37,6 +37,10 @@ class RecordViewModel @Inject constructor(
     val navigateToHome: LiveData<Event<Unit>>
         get() = _navigateToHome
 
+    private val _navigateToSearch = MutableLiveData<Event<Unit>>()
+    val navigateToSearch: LiveData<Event<Unit>>
+        get() = _navigateToSearch
+
     private val _date = MediatorLiveData<Calendar>().apply { value = Calendar.getInstance() }
 
     private val _monthYear = MediatorLiveData<String>()
@@ -90,6 +94,10 @@ class RecordViewModel @Inject constructor(
 
     fun onDayClicked() {
         _showDatePicker.value = Event(getDefaultDate())
+    }
+
+    fun onLocationClicked() {
+        _navigateToSearch.value = Event(Unit)
     }
 
     fun onTextAlignClicked() {

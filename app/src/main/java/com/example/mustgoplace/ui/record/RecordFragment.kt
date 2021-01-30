@@ -60,6 +60,10 @@ class RecordFragment : DaggerFragment() {
         viewModel.navigateToHome.observe(viewLifecycleOwner, EventObserver {
             findNavController().popBackStack()
         })
+
+        viewModel.navigateToSearch.observe(viewLifecycleOwner, EventObserver {
+            findNavController().navigate(RecordFragmentDirections.actionToSearchFromRecord())
+        })
     }
 
     private fun showDatePickerAlert(eventDate: Triple<Int, Int, Int>) {
