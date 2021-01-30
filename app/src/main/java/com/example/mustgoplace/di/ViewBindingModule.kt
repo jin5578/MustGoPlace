@@ -5,6 +5,7 @@ import com.example.mustgoplace.ui.home.HomeModule
 import com.example.mustgoplace.ui.main.MainActivity
 import com.example.mustgoplace.ui.main.MainModule
 import com.example.mustgoplace.ui.record.RecordModule
+import com.example.mustgoplace.ui.revise.ReviseModule
 import com.example.mustgoplace.ui.setting.SettingModule
 import com.example.mustgoplace.ui.splash.SplashModule
 import dagger.Module
@@ -20,7 +21,8 @@ abstract class ViewBindingModule {
             SplashModule::class,
             HomeModule::class,
             SettingModule::class,
-            RecordModule::class
+            RecordModule::class,
+            ReviseModule::class
         ]
     )
 

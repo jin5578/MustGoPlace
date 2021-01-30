@@ -1,10 +1,13 @@
 package com.example.mustgoplace.ui.record
 
 import androidx.lifecycle.*
+import com.example.mustgoplace.domain.PlaceRepository
 import com.example.mustgoplace.model.Event
+import com.example.mustgoplace.model.Place
 import java.text.SimpleDateFormat
 import java.util.*
 import com.example.mustgoplace.util.getMonth
+import com.example.mustgoplace.util.requireValue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -14,7 +17,13 @@ import javax.inject.Inject
 
 private typealias EVENT_DATE_PICKER = Triple<Int, Int, Int>
 
-class RecordViewModel @Inject constructor() : ViewModel() {
+class RecordViewModel @Inject constructor(
+    private val placeRepository: PlaceRepository
+) : ViewModel() {
+
+    private val _showToast = MutableLiveData<Event<String>>()
+    val showToast: LiveData<Event<String>>
+        get() = _showToast
 
     private val _showAlertDialog = MutableLiveData<Event<Unit>>()
     val showAlertDialog: LiveData<Event<Unit>>
@@ -70,7 +79,13 @@ class RecordViewModel @Inject constructor() : ViewModel() {
     }
 
     fun onConfirmClicked() {
-        Timber.e("currentDate : ${_date.value}")
+        val contentIsNull = content.value.isNullOrEmpty()
+
+        if (contentIsNull) {
+            _showToast.postValue(Event("내용을 입력해주세요 :("))
+        } else {
+            onPlaceRecorded()
+        }
     }
 
     fun onDayClicked() {
@@ -95,13 +110,24 @@ class RecordViewModel @Inject constructor() : ViewModel() {
         }
     }
 
-    private fun onPlaceInsert() {
+    private fun onPlaceRecorded() {
+        val place =
+            Place(0, content.requireValue(), _date.requireValue().time, getCurrentDate().time)
+
+        onPlaceInsert(place)
+    }
+
+    private fun onPlaceInsert(place: Place) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-
+                placeRepository.insert(place)
             }
+
+            _navigateToHome.value = Event(Unit)
         }
     }
+
+    private fun getCurrentDate() = Calendar.getInstance()
 
     private fun getDefaultDate(): EVENT_DATE_PICKER {
         val calendar = _date.value ?: Calendar.getInstance()

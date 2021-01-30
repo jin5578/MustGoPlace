@@ -6,14 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.mustgoplace.R
 import com.example.mustgoplace.databinding.FragmentRecordBinding
 import com.example.mustgoplace.model.EventObserver
 import com.example.mustgoplace.util.assistedFragmentViewModel
 import com.example.mustgoplace.util.showAlertDialog
+import com.example.mustgoplace.util.showToastMessage
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 import javax.inject.Provider
@@ -45,6 +44,10 @@ class RecordFragment : DaggerFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         onBackPressed()
+
+        viewModel.showToast.observe(viewLifecycleOwner, EventObserver {
+            showToastMessage(it)
+        })
 
         viewModel.showAlertDialog.observe(viewLifecycleOwner, EventObserver {
             showAlertDialog(resources.getString(R.string.alert_dialog_content))
