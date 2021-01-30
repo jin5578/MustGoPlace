@@ -30,58 +30,72 @@
             android:orientation="vertical"
             app:layout_constraintGuide_end="10dp" />
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_start_20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="20dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_end_20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="20dp" />
+
         <TextView
             android:id="@+id/tv_location_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingVertical="15dp"
             android:text="@string/location"
-            android:textStyle="bold"
-            android:textSize="16sp"
             android:textColor="@color/black"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="16sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingVertical="10dp"
             android:text="@string/cancel"
-            android:textSize="12sp"
             android:textColor="@color/black"
-            app:layout_constraintTop_toTopOf="@id/tv_location_title"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@id/tv_location_title"
-            app:layout_constraintEnd_toEndOf="@id/guide_end_10"/>
+            app:layout_constraintEnd_toEndOf="@id/guide_end_10"
+            app:layout_constraintTop_toTopOf="@id/tv_location_title" />
 
         <View
             android:id="@+id/contour1"
             android:layout_width="0dp"
             android:layout_height="0.5dp"
-            android:background="@color/colorGray3"
-            app:layout_constraintStart_toStartOf="parent"
+            android:background="@color/grayscale_04"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_location_title"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_location_title" />
 
-        <!--<androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_search"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:background="@drawable/background_rounded_black"
-            android:paddingHorizontal="10dp"
-            android:paddingVertical="10dp"
-            app:layout_constraintEnd_toEndOf="@id/guide_end_10"
-            app:layout_constraintStart_toStartOf="@id/guide_start_10"
-            app:layout_constraintTop_toTopOf="parent">
+            android:background="@drawable/background_rounded_gray1"
+            android:padding="10dp"
+            app:layout_constraintEnd_toEndOf="@id/guide_end_20"
+            app:layout_constraintStart_toStartOf="@id/guide_start_20"
+            app:layout_constraintTop_toBottomOf="@id/contour1">
 
             <ImageView
-                android:id="@+id/iv_previous"
+                android:id="@+id/iv_search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_left_arrow" />
+                app:srcCompat="@drawable/ic_search" />
 
             <EditText
                 android:layout_width="0dp"
@@ -94,10 +108,19 @@
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/iv_previous"
+                app:layout_constraintStart_toEndOf="@id/iv_search"
                 app:layout_constraintTop_toTopOf="parent" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>-->
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="@id/guide_end_20"
+            app:layout_constraintStart_toStartOf="@id/guide_start_20"
+            app:layout_constraintTop_toBottomOf="@id/cl_search" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
