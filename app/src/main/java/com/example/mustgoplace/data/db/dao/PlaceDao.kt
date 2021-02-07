@@ -16,6 +16,4 @@ interface PlaceDao {
     @Query("SELECT * FROM place")
     suspend fun getPlace(): List<PlaceEntity>
 
-
-
 }

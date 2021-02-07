@@ -1,17 +1,22 @@
 package com.example.mustgoplace.ui.home
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import android.util.Log
+import androidx.lifecycle.*
+import com.example.mustgoplace.domain.PlaceRepository
 import com.example.mustgoplace.model.Event
+import com.example.mustgoplace.model.Place
 import java.text.SimpleDateFormat
 import java.util.*
 import com.example.mustgoplace.util.getMonth
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 
-class HomeViewModel @Inject constructor() : ViewModel() {
+class HomeViewModel @Inject constructor(
+    private val placeRepository: PlaceRepository
+) : ViewModel() {
 
     private val _showToast = MutableLiveData<Event<String>>()
     val showToast: LiveData<Event<String>>
@@ -39,6 +44,10 @@ class HomeViewModel @Inject constructor() : ViewModel() {
     val month: LiveData<String>
         get() = _month
 
+    private val _placeResult = MutableLiveData<List<Place>>()
+    val placeResult: LiveData<List<Place>>
+        get() = _placeResult
+
     private var pressedTime: Long = 0
 
 
@@ -50,6 +59,8 @@ class HomeViewModel @Inject constructor() : ViewModel() {
         _month.addSource(currentDate) {
             _month.value = it.mapToMonth()
         }
+
+        onPlaceListLoaded()
     }
 
 
@@ -81,6 +92,13 @@ class HomeViewModel @Inject constructor() : ViewModel() {
         }
     }
 
+    private fun onPlaceListLoaded() {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                _placeResult.postValue(placeRepository.getPlace())
+            }
+        }
+    }
 
     private fun Date.mapToYear(): String {
         val yearFormat = SimpleDateFormat("yyyy", Locale.KOREA)
