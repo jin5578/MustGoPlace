@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.example.mustgoplace.ui.home.HomeViewModel" />
@@ -90,6 +92,11 @@
             android:id="@+id/rv_record_list"
             android:layout_width="@dimen/match_constraint"
             android:layout_height="@dimen/match_constraint"
+            android:overScrollMode="never"
+            android:splitMotionEvents="false"
+            android:visibility="@{viewModel.hasEmptyPlace ? View.GONE : View.VISIBLE , default = visible}"
+            app:placeList="@{viewModel.placeResult}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

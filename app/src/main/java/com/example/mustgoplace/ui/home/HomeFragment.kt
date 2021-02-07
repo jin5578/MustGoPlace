@@ -44,6 +44,7 @@ class HomeFragment : DaggerFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         onBackPressed()
+        setInitRecycler()
 
         viewModel.showToast.observe(viewLifecycleOwner, EventObserver {
             showToastMessage(it)
@@ -60,6 +61,12 @@ class HomeFragment : DaggerFragment() {
         viewModel.appkillProcess.observe(viewLifecycleOwner, EventObserver {
             appKillProcess()
         })
+    }
+
+    private fun setInitRecycler() {
+        binding.rvRecordList.apply {
+            adapter = PlaceListAdapter(this@HomeFragment, viewModel)
+        }
     }
 
     private fun onBackPressed() {

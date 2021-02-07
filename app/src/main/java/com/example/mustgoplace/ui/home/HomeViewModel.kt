@@ -44,9 +44,13 @@ class HomeViewModel @Inject constructor(
     val month: LiveData<String>
         get() = _month
 
-    private val _placeResult = MutableLiveData<List<Place>>()
+    private val _placeResult = MediatorLiveData<List<Place>>()
     val placeResult: LiveData<List<Place>>
         get() = _placeResult
+
+    private val _hasEmptyPlace = MediatorLiveData<Boolean>()
+    val hasEmptyPlace: LiveData<Boolean>
+        get() = _hasEmptyPlace
 
     private var pressedTime: Long = 0
 
@@ -58,6 +62,10 @@ class HomeViewModel @Inject constructor(
 
         _month.addSource(currentDate) {
             _month.value = it.mapToMonth()
+        }
+
+        _hasEmptyPlace.addSource(_placeResult) {
+            _hasEmptyPlace.value = it.isNullOrEmpty()
         }
 
         onPlaceListLoaded()
